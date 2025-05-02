@@ -15,7 +15,7 @@ export default function GenerateQRPage() {
 
   const handleStartAttendance = () => {
     if (!selectedClass) return alert("Lütfen bir sınıf seçin.");
-    const key = `https://qr-attendance-amber.vercel.app/attendance/${selectedClass}/${today}`;
+    const key = `https://qr-attendance-amber.vercel.app//attendance/${selectedClass}/${today}`;
     setQrValue(key);
     setQrVisible(true);
   };
@@ -26,7 +26,7 @@ export default function GenerateQRPage() {
     const interval = setInterval(() => {
       const storedData = JSON.parse(localStorage.getItem(storageKey) || "[]");
       setAttendanceList(storedData);
-    }, 1000); // her saniyede bir güncelle (canlı görünüm)
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [qrVisible, selectedClass, storageKey]);
