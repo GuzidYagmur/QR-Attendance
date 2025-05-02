@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 
-function getTodayURL() {
+function getTodayKey() {
   const today = new Date().toISOString().split("T")[0];
-  return `http://172.20.10.3:3000/attendance/${today}`;
+  return `https://qr-attendance-amber.vercel.app/attendance/${today}`;
 }
 
 export default function QRCodeGenerator() {
