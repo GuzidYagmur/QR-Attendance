@@ -5,7 +5,7 @@ import { QRCodeCanvas } from "qrcode.react";
 
 function getTodayKey() {
   const today = new Date().toISOString().split("T")[0];
-  return `https://yourdomain.com/attendance/${today}`;
+  return `https://qr-attendance-amber.vercel.app/attendance/${today}`;
 }
 
 export default function GenerateQRPage() {
