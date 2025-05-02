@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 
-function getTodayKey() {
+function getTodayURL() {
   const today = new Date().toISOString().split("T")[0];
   return `https://qr-attendance-amber.vercel.app/attendance/${today}`;
 }
