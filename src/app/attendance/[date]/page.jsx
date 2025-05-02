@@ -3,18 +3,20 @@
 import { useState, useEffect } from "react";
 
 export default function AttendancePage({ params }) {
+  const { class: className, date } = params;
   const [joined, setJoined] = useState(false);
 
-  const storageKey = `attendance-${params.date}`;
+  const storageKey = `attendance-${className}-${date}`;
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem(storageKey) || "[]");
 
-    if (storedData.length > 0) {
+    const hasJoined = storedData.some(
+      (entry) => entry.name === localStorage.getItem("joinedName")
+    );
+    if (hasJoined) {
       setJoined(true);
     }
-
-    console.log("Yoklama Listesi:", storedData);
   }, [storageKey]);
 
   const handleJoin = () => {
@@ -23,23 +25,28 @@ export default function AttendancePage({ params }) {
     if (name) {
       const storedData = JSON.parse(localStorage.getItem(storageKey) || "[]");
 
-      if (storedData.includes(name)) {
+      const alreadyExists = storedData.some((entry) => entry.name === name);
+      if (alreadyExists) {
         alert("Bu isim zaten yoklamaya katılmış!");
         setJoined(true);
         return;
       }
 
-      const updatedData = [...storedData, name];
-      localStorage.setItem(storageKey, JSON.stringify(updatedData));
-      setJoined(true);
+      const timestamp = new Date().toLocaleString();
+      const updateData = [...storedData, { name, timestamp }];
 
-      console.log("Güncel Yoklama Listesi:", updatedData);
+      localStorage.setItem(storageKey, JSON.stringify(updateData));
+      localStorage.setItem("joinedName", name);
+
+      setJoined(true);
     }
   };
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-6">
-      <h1 className="text-2xl font-bold mb-4">Yoklama Günü: {params.date}</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        {className} Sınıfı - Yoklama Günü: {date}
+      </h1>
 
       {joined ? (
         <p className="text-green-600 font-semibold">Yoklamaya katıldınız!</p>
